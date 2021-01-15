@@ -111,10 +111,16 @@ const App = () => {
         let planet = planets.find((planet) => planet.url === person.homeworld);
         //find species by url in the species list (some people dont have a species)
         let race = {};
-        if (person.species)
+        //for some reason the SWAPI api returns humans with no species
+        if (person.species.length > 0) {
           race = species.find((race) => race.url === person.species[0]);
+        } else {
+          race = species[0];
+        }
+
         //push an object containing all this info into an array
-        characterInfo.push({ c: person, p: planet, s: race });
+        let character = { c: person, p: planet, s: race };
+        characterInfo.push(character);
       }
 
       //once weve gone through all people and got their info, set Characters
